@@ -122,14 +122,3 @@ Route::prefix('admin')
         Route::get('/admin/transaksi/cetak-pdf', [TransaksiController::class, 'cetakPDF'])->name('Transaksi.cetakPDF');
     });
 
-Route::get('/test-email', function () {
-    \Resend\Laravel\Facades\Resend::emails()->send([
-        'from' => 'Resend <onboarding@resend.dev>',
-        'to' => 'apfmedia25@gmail.com',
-        'subject' => 'Test Resend',
-        'html' => '<h1>Test berhasil!</h1>',
-    ]);
-
-    return 'Email terkirim!';
-});
-
