@@ -132,3 +132,4 @@ Route::get('/test-email', function () {
 
     return 'Email terkirim!';
 });
+
