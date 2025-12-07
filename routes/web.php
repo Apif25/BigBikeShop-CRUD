@@ -121,7 +121,7 @@ Route::prefix('admin')
         Route::delete('/Transaksi/{id_transaksi}', [TransaksiController::class, 'destroy'])->name('Transaksi.destroy');
         Route::get('/admin/transaksi/cetak-pdf', [TransaksiController::class, 'cetakPDF'])->name('Transaksi.cetakPDF');
     });
-
+    
 Route::get('/test-email', function () {
     \Resend\Laravel\Facades\Resend::emails()->send([
         'from' => 'Resend <onboarding@resend.dev>',
