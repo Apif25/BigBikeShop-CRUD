@@ -130,6 +130,6 @@ Route::get('/test-email', function () {
         'html' => '<h1>Test berhasil!</h1>',
     ]);
 
-    return 'Email terkirim!';
+     return 'Email terkirim!';
 });
 
