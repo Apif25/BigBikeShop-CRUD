@@ -42,16 +42,6 @@ class AuthenticatedSessionController extends Controller
         switch ($user->usertype) {
             case 'admin':
                 return redirect()->route('admin.dashboard');
-
-            case 'kasir':
-                return redirect()->route('kasir.dashboard');
-
-            case 'gudang':
-                return redirect()->route('gudang.dashboard');
-
-            case 'owner':
-                return redirect()->route('owner.dashboard');
-
             default:
                 return redirect()->route('dashboard');
         }
