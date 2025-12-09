@@ -54,15 +54,20 @@ Route::middleware('auth')->group(function () {
 // ==========================
 // USER DASHBOARD
 // ==========================
-Route::middleware(['auth', 'user'])->group(function () {
-    Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
 
 // ==========================
 // ADMIN DASHBOARD
-// ==========================
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
 });
 
 // ==========================
@@ -121,4 +126,5 @@ Route::prefix('admin')
         Route::delete('/Transaksi/{id_transaksi}', [TransaksiController::class, 'destroy'])->name('Transaksi.destroy');
         Route::get('/admin/transaksi/cetak-pdf', [TransaksiController::class, 'cetakPDF'])->name('Transaksi.cetakPDF');
     });
+
 

@@ -14,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::orderBy('id', 'desc')->get(); // <- huruf U besar
-        return view('admin.user.index', compact('user')); // arahkan ke view SB Admin 2
+        $user = User::orderBy('id', 'desc')->get(); 
+        return view('admin.user.index', compact('user')); 
     }
 
     /**
@@ -41,7 +41,7 @@ class UserController extends Controller
 
         ]);
 
-        // Simpan ke database
+        
         User::create([
             'name' => $request->name,
             'email' => $request->email,

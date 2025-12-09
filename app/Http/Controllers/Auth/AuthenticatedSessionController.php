@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +12,7 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Tampilkan halaman login
      */
     public function create(): View
     {
@@ -21,40 +20,52 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Handle login
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // proses login
         $request->authenticate();
-
         $request->session()->regenerate();
 
-        if (Auth::check()) {
-        $user = Auth::user();
-
-        // Admin → ke admin dashboard
-        if ($user->usertype === 'admin') {
-            return redirect()->route('admin.dashboard');
-        }
-
-        // User biasa → ke user dashboard
-        return redirect()->route('dashboard');
+        // redirect ke dashboard sesuai role
+        return $this->redirectByRole();
     }
 
-    return redirect()->route('login');
-}
+    /**
+     * Redirect berdasarkan role
+     */
+    protected function redirectByRole()
+    {
+        $user = Auth::user();
+
+        switch ($user->usertype) {
+            case 'admin':
+                return redirect()->route('admin.dashboard');
+
+            case 'kasir':
+                return redirect()->route('kasir.dashboard');
+
+            case 'gudang':
+                return redirect()->route('gudang.dashboard');
+
+            case 'owner':
+                return redirect()->route('owner.dashboard');
+
+            default:
+                return redirect()->route('dashboard');
+        }
+    }
 
     /**
-     * Destroy an authenticated session.
+     * Logout
      */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return redirect('login');
+        return redirect()->route('login');
     }
 }
