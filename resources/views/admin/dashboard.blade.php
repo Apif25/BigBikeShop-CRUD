@@ -1,7 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
-<h1 class="h3 mb-4 text-gray-800">Dashboard Admin</h1>
+<h1 class="h3 mb-4 text-gray-800">Dashboard @if (Auth::user() -> usertype == 'admin')
+    Admin
+    @elseif(Auth::user() -> usertype == 'finance')
+    Finance
+    @elseif(Auth::user() -> usertype == 'staff')
+    Staff
+    @elseif(Auth::user() -> usertype == 'owner')
+    Owner
+    @endif </h1>
 
 <div class="card shadow mb-4">
     <div class="card-body">
@@ -10,8 +18,12 @@
             <b>
                 @if (Auth::user() -> usertype == 'admin')
                 Admin
-                @elseif(Auth::user() -> usertype == 'user')
-                User
+                @elseif(Auth::user() -> usertype == 'finance')
+                Finance
+                @elseif(Auth::user() -> usertype == 'staff')
+                Staff
+                @elseif(Auth::user() -> usertype == 'owner')
+                Owner
                 @endif
             </b>
         </p>

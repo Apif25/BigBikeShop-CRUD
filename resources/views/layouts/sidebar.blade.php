@@ -22,6 +22,7 @@
      <hr class="sidebar-divider">
 
      <!-- Heading -->
+     @if(Auth::user()->usertype == 'admin')
      <div class="sidebar-heading">
          Manajemen Data
      </div>
@@ -32,11 +33,14 @@
              <i class="fa fa-user"></i>
              <span>User</span></a>
      </li>
+     @endif
+
 
      <!-- Divider -->
      <hr class="sidebar-divider">
 
      <!-- Heading -->
+     @if(Auth::user()->usertype == 'admin')
      <div class="sidebar-heading">
          Master
      </div>
@@ -48,19 +52,69 @@
              <i class="fa fa-motorcycle"></i>
              <span>Motor</span></a>
      </li>
+     @endif
 
-     <!-- Nav Item - Pemesanan -->
+     @if(Auth::user()->usertype == 'owner')
+     <div class="sidebar-heading">
+         Master
+     </div>
+
+
+     <!-- Nav Item - Motor -->
+     <li class="nav-item">
+         <a class="nav-link" href="{{ route('admin.motor.index') }}">
+             <i class="fa fa-motorcycle"></i>
+             <span>Motor</span></a>
+     </li>
+     @endif
+
+     @if(Auth::user()->usertype == 'staff')
+     <div class="sidebar-heading">
+         Master
+     </div>
+
+
+     <!-- Nav Item - Motor -->
+     <li class="nav-item">
+         <a class="nav-link" href="{{ route('admin.motor.index') }}">
+             <i class="fa fa-motorcycle"></i>
+             <span>Motor</span></a>
+     </li>
+     @endif
+
+
+     <!-- Nav Item - Pemesanan Admin -->
+     @if(Auth::user()->usertype == 'admin')
      <li class="nav-item">
          <a class="nav-link" href="{{ route('admin.pemesanan.index') }}">
              <i class="fa fa-shopping-cart"></i>
              <span>Pemesanan</span></a>
      </li>
+     @endif
+
+     <!-- Nav Item - Pemesanan Staff -->
+     @if(Auth::user()->usertype == 'staff')
+     <li class="nav-item">
+         <a class="nav-link" href="{{ route('admin.pemesanan.index') }}">
+             <i class="fa fa-shopping-cart"></i>
+             <span>Pemesanan</span></a>
+     </li>
+     @endif
+
+     @if(Auth::user()->usertype == 'owner')
+     <li class="nav-item">
+         <a class="nav-link" href="{{ route('admin.pemesanan.index') }}">
+             <i class="fa fa-shopping-cart"></i>
+             <span>Pemesanan</span></a>
+     </li>
+     @endif
 
 
      <!-- Divider -->
      <hr class="sidebar-divider">
 
      <!-- Heading -->
+     @if(Auth::user()->usertype == 'finance')
      <div class="sidebar-heading">
          Transaksi
      </div>
@@ -83,10 +137,36 @@
              <i class="fa fa-arrow-up"></i>
              <span>Transaksi Keluar</span></a>
      </li>
+     @endif
+
+     @if(Auth::user()->usertype == 'owner')
+     <div class="sidebar-heading">
+         Transaksi
+     </div>
+
+     <!-- Nav Item - Transaksi -->
+     <li class="nav-item">
+         <a class="nav-link" href="{{ route('admin.Transaksi.index') }}">
+             <i class="fa fa-random"></i>
+             <span>Riwayat Transaksi</span></a>
+     </li>
+
+     <li class="nav-item">
+         <a class="nav-link" href="{{ route('admin.Transaksi.create',  'masuk') }}">
+             <i class="fa fa-arrow-down"></i>
+             <span>Transaksi Masuk</span></a>
+     </li>
+
+     <li class="nav-item">
+         <a class="nav-link" href="{{ route('admin.Transaksi.create', 'keluar') }}">
+             <i class="fa fa-arrow-up"></i>
+             <span>Transaksi Keluar</span></a>
+     </li>
+     @endif
 
 
 
-    
+
      <!-- Divider -->
      <hr class="sidebar-divider d-none d-md-block">
 

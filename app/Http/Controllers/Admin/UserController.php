@@ -14,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::orderBy('id', 'desc')->get(); 
-        return view('admin.user.index', compact('user')); 
+        $user = User::orderBy('id', 'desc')->get();
+        return view('admin.user.index', compact('user'));
     }
 
     /**
@@ -23,6 +23,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(403, 'Owner tidak bisa tambah user');
+        }
         return view('admin.user.create');
     }
 
@@ -41,7 +44,7 @@ class UserController extends Controller
 
         ]);
 
-        
+
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -56,6 +59,9 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(403, 'Owner tidak bisa edit user');
+        }
         $user = User::findOrFail($id);
         return view('admin.user.edit', compact('user'));
     }
@@ -89,9 +95,11 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(403, 'Owner tidak bisa hapus user');
+        }
         $user = User::findOrFail($id);
         $user->delete();
         return redirect()->route('admin.user.index')->with('success', 'User berhasil dihapus');
     }
 }
- 

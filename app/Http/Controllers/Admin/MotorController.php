@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class MotorController extends Controller
-{ 
+{
     /**
      * Tampilkan semua data motor
      */
@@ -25,6 +25,9 @@ class MotorController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(403, 'Owner tidak bisa tambah motor');
+        }
         return view('admin.motor.create');
     }
 
@@ -60,6 +63,9 @@ class MotorController extends Controller
      */
     public function edit($id_motor)
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(404, 'Owner tidak bisa edit motor');
+        }
         $motor = Motor::findOrFail($id_motor);
         return view('admin.motor.edit', compact('motor'));
     }
@@ -104,6 +110,10 @@ class MotorController extends Controller
      */
     public function destroy($id_motor)
     {
+
+        if (auth()->user()->usertype == 'owner') {
+            abort(404, 'Owner tidak bisa hapus motor');
+        }
         $motor = Motor::findOrFail($id_motor);
 
         // Hapus gambar jika ada

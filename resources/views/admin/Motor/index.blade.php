@@ -1,5 +1,4 @@
 @extends('layouts.admin')
-
 @section('content')
 
 <h1 class="h3 mb-4 text-gray-800">Data Motor</h1>
@@ -12,8 +11,12 @@
             <b>
                 @if (Auth::user()->usertype == 'admin')
                 Admin
-                @elseif (Auth::user()->usertype == 'user')
-                User
+                @elseif (Auth::user()->usertype == 'finance')
+                Finance
+                @elseif (Auth::user()->usertype == 'staff')
+                Staff
+                @elseif (Auth::user()->usertype == 'owner')
+                Owner
                 @endif
             </b>
         </p>

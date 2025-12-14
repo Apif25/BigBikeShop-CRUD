@@ -14,8 +14,10 @@
             <b>
                 @if (Auth::user()->usertype == 'admin')
                 Admin
-                @elseif (Auth::user()->usertype == 'user')
-                User
+                @elseif (Auth::user()->usertype == 'finance')
+                Finance
+                @elseif (Auth::user()->usertype == 'owner')
+                Owner
                 @endif
             </b>
         </p>

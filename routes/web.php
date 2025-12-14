@@ -71,6 +71,20 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // ==========================
+// Finance DASHBOARD
+Route::middleware(['auth', 'usertype:finance'])->group(function(){
+    Route::resource('transaksi', TransaksiController::class);
+});
+
+Route::middleware(['auth', 'usertype:owner'])->group(function(){
+    Route::resource('motor', MotorController::class);
+});
+
+Route::middleware(['auth', 'usertype:staff'])->group(function(){
+    Route::resource('motor', MotorController::class);
+});
+
+// ==========================
 // LOGOUT (UNTUK SEMUA ROLE)
 // ==========================
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])

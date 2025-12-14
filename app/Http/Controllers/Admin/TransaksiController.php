@@ -26,6 +26,9 @@ class TransaksiController extends Controller
      */
     public function create($jenis)
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(403, 'Owner tidak bisa tambah transaksi');
+        }
 
         $motor = Motor::orderBy('nama_motor')->get();
 
@@ -112,6 +115,10 @@ class TransaksiController extends Controller
      */
     public function edit($id_transaksi)
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(403, 'Owner tidak bisa edit transaksi');
+        }
+
         $transaksi = Transaksi::findOrFail($id_transaksi);
         $motor = Motor::all();
         $jenis = $transaksi->jenis; // 
@@ -126,8 +133,8 @@ class TransaksiController extends Controller
     public function update(Request $request, string $id)
     {
         $transaksi = Transaksi::findOrFail($id);
-        
-    
+
+
         $jenis = $request->jenis;
 
         $request->validate([
@@ -136,7 +143,7 @@ class TransaksiController extends Controller
             'harga'    => $jenis === 'keluar' ? 'required|numeric|min:0' : 'nullable',
         ]);
 
-        
+
         $motorLama = Motor::findOrFail($transaksi->id_motor);
 
         // Kembalikan stock berdasarkan transaksi lama
@@ -147,7 +154,7 @@ class TransaksiController extends Controller
         }
         $motorLama->save();
 
-        
+
         $motorBaru = Motor::findOrFail($request->id_motor);
 
         // Cek stok jika transaksi keluar
@@ -155,7 +162,7 @@ class TransaksiController extends Controller
             return back()->with('error', 'Stock tidak mencukupi untuk transaksi baru!');
         }
 
-        
+
         $harga = $jenis === 'masuk' ? $motorBaru->harga : $request->harga;
 
         // Update stock motor baru
@@ -186,6 +193,10 @@ class TransaksiController extends Controller
      */
     public function destroy(string $id)
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(403, 'Owner tidak bisa hapus transaksi');
+        }
+
         $transaksi = Transaksi::findOrFail($id);
         $motor = Motor::findOrFail($transaksi->id_motor);
 

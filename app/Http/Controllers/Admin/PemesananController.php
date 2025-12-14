@@ -27,6 +27,9 @@ class PemesananController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(403, 'Owner tidak bisa tambah pemesanan');
+        }
         $user = User::orderBy('name')->get();
         $motor = Motor::orderBy('nama_motor')->get();
 
@@ -81,6 +84,9 @@ class PemesananController extends Controller
      */
     public function edit(string $id_pemesanan)
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(403, 'Owner tidak bisa edit pemesanan');
+        }
         $pemesanan = Pemesanan::findOrFail($id_pemesanan);
         $user = User::all();
         $motor = Motor::all();
@@ -119,6 +125,9 @@ class PemesananController extends Controller
      */
     public function destroy(string $id_pemesanan)
     {
+        if (auth()->user()->usertype == 'owner') {
+            abort(403, 'Owner tidak bisa hapus pemesanan');
+        }
         $pemesanan = Pemesanan::findOrFail($id_pemesanan);
         $pemesanan->delete();
 
